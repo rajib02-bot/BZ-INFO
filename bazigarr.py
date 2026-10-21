@@ -19,7 +19,7 @@ app = Flask(__name__)
 # ============================================
 # API CONFIGURATION
 # ============================================
-API_URL = "http://127.0.0.1:5000/api/v1/lookup"
+API_URL = "https://bazigar-api.onrender.com/api/v1/lookup"
 API_KEY = "bazigar_here"
 
 # ============================================
