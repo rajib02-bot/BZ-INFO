@@ -5,7 +5,7 @@ app = Flask(__name__)
 # ============================================
 # API KEY CONFIGURATION (Apni Marzi Ki Key)
 # ============================================
-MY_SECRET_API_KEY = "bazigar_secret_12345"
+MY_SECRET_API_KEY = "bazigar_here"
 
 # ============================================
 # YOUR DATABASE (Mock Data)
