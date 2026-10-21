@@ -1145,4 +1145,219 @@ function displayResults(number, data) {
         
         html += `<div class="result-item">
             <span class="label"><i class="fas fa-signal"></i> Network 
+            <span class="value">${info.circle || 'N/A'}</span>
+        </div>`;
+        
+        if (info.alt) {
+            html += `<div class="result-item">
+                <span class="label"><i class="fas fa-phone-plus"></i> Alternate Number</span>
+                <span class="value">${info.alt}</span>
+            </div>`;
+        }
+        
+        if (info.email) {
+            html += `<div class="result-item">
+                <span class="label"><i class="fas fa-envelope"></i> Email</span>
+                <span class="value">${info.email}</span>
+            </div>`;
+        }
+        
+        resultContent.innerHTML = html;
+        resultBox.classList.add('show');
+        document.getElementById('errorText').classList.remove('show');
+        
+        let apiHtml = '';
+        if (data.BUY_API) {
+            apiHtml += `<span><i class="fas fa-shopping-cart" style="color:#FF9933;"></i> BUY API: <strong>${data.BUY_API}</strong></span>`;
+        }
+        if (data.SUPPORT) {
+            apiHtml += `<span><i class="fas fa-headset" style="color:#FF9933;"></i> SUPPORT: <strong>${data.SUPPORT}</strong></span>`;
+        }
+        if (apiHtml) {
+            apiInfo.innerHTML = apiHtml;
+            apiInfo.style.display = 'flex';
+        }
+        
+    } else {
+        resultBox.classList.remove('show');
+        document.getElementById('errorText').textContent = '❌ No data found for this number!';
+        document.getElementById('errorText').classList.add('show');
+    }
+}
+
+// ============================================
+// SEARCH FUNCTION
+// ============================================
+async function searchNumber() {
+    const input = document.getElementById('phoneInput');
+    const number = input.value.trim();
+    const statusText = document.getElementById('statusText');
+    const statusDot = document.getElementById('statusDot');
+    const trackBtn = document.getElementById('trackBtn');
+    const errorText = document.getElementById('errorText');
+    
+    if (!number || number.length !== 10 || !/^[0-9]{10}$/.test(number)) {
+        errorText.textContent = '⚠️ Please enter a valid 10-digit phone number!';
+        errorText.classList.add('show');
+        return;
+    }
+    
+    errorText.classList.remove('show');
+    
+    trackBtn.disabled = true;
+    trackBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SEARCHING...';
+    statusText.textContent = '🔍 Searching...';
+    statusDot.className = 'dot';
+    
+    document.getElementById('resultBox').classList.remove('show');
+    document.getElementById('apiInfo').style.display = 'none';
+    
+    try {
+        const data = await callAPI(number);
+        displayResults(number, data);
+        
+        if (data.status === 'success' && data.result && data.result.length > 0) {
+            statusText.textContent = '✅ Search completed (' + data.result.length + ' records found)';
+            statusDot.className = 'dot';
+        } else if (data.status === 'error') {
+            statusText.textContent = '❌ API Error';
+            statusDot.className = 'dot error';
+        } else {
+            statusText.textContent = '❌ No data found';
+            statusDot.className = 'dot error';
+        }
+        
+    } catch (error) {
+        console.error('Search Error:', error);
+        statusText.textContent = '❌ Connection error';
+        statusDot.className = 'dot error';
+        errorText.textContent = '❌ Network error. Please try again.';
+        errorText.classList.add('show');
+    }
+    
+    trackBtn.disabled = false;
+    trackBtn.innerHTML = '<i class="fas fa-search"></i> GET INFORMATION';
+}
+
+// ============================================
+// EVENT LISTENERS
+// ============================================
+document.getElementById('trackForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    searchNumber();
+});
+
+document.getElementById('phoneInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        searchNumber();
+    }
+});
+
+document.getElementById('phoneInput').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+
+// ============================================
+// DISABLE COPY
+// ============================================
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    return false;
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 's' || e.key === 'p' || e.key === 'u')) {
+        e.preventDefault();
+        return false;
+    }
+    if (e.key === 'F12') {
+        e.preventDefault();
+        return false;
+    }
+});
+
+document.addEventListener('dragstart', function(e) {
+    e.preventDefault();
+    return false;
+});
+
+// ============================================
+// AUTO SEARCH
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        searchNumber();
+    }, 1500);
+});
+</script>
+
+</body>
+</html>
+'''
+
+# ============================================
+# FLASK ROUTE: HOME PAGE
+# ============================================
+@app.route('/')
+def home():
+    return render_template_string(HTML_TEMPLATE)
+
+# ============================================
+# FLASK ROUTE: API LOOKUP (PROXY)
+# ============================================
+@app.route('/api/lookup', methods=['POST'])
+def lookup():
+    try:
+        data = request.get_json()
+        number = data.get('number', '').strip()
+        
+        if not number:
+            return jsonify({"status": "error", "message": "Phone number required"})
+        
+        # Clean number
+        clean_number = re.sub(r'[\+\s\-]', '', number)
+        
+        # Build API URL
+        params = {
+            'key': API_KEY,
+            'type': 'number',
+            'num': clean_number
+        }
+        
+        # Call API
+        response = requests.get(API_URL, params=params, timeout=30)
+        response.raise_for_status()
+        
+        api_data = response.json()
+        
+        # Check if API returned error
+        if api_data.get('status') == 'error':
+            return jsonify(api_data)
+        
+        # Format response
+        return jsonify({
+            "status": "success",
+            "result": api_data.get('result', [])
+        })
+        
+    except requests.exceptions.Timeout:
+        return jsonify({"status": "error", "message": "API timeout"})
+    except requests.exceptions.RequestException as e:
+        return jsonify({"status": "error", "message": f"API error: {str(e)}"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": f"Server error: {str(e)}"})
+
+# ============================================
+# MAIN: RUN SERVER
+# ============================================
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 8080))
+    print("\n" + "="*50)
+    print("🛡️  The Hckrr BaziGarS - NUMBER INFORMATION")
+    print("="*50)
+    print(f"✅ Server running on: http://127.0.0.1:{port}")
+    print(f"📱 Open in browser: http://127.0.0.1:{port}")
+    print("="*50 + "\n")
+    app.run(host='0.0.0.0', port=port, debug=False, threaded=True)
             
