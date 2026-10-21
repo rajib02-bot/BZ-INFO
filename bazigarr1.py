@@ -613,3 +613,536 @@ HTML_TEMPLATE = '''
         /* ===== SECURITY BADGE ===== */
         .security-badge {
             margin-top: 18px
+            padding: 14px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            border: 1px solid #e8e8e8;
+        }
+        .security-badge .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: #555;
+            font-weight: 500;        }
+        .security-badge .badge-item i { color: #138808; font-size: 15px; }
+
+        /* ===== SOCIAL MEDIA ===== */
+        .social-section {
+            margin-top: 18px;
+            padding: 18px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e8e8e8;
+        }
+        .social-section .social-title {
+            font-size: 11px;
+            color: #777;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .social-section .social-title i { color: #FF9933; margin-right: 8px; }
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans Devanagari', 'Segoe UI', Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        .social-btn:hover::before { left: 100%; }
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .social-btn i { font-size: 18px; }
+        .social-btn.youtube { background: #FF0000; }
+        .social-btn.instagram { background: linear-gradient(135deg, #833AB4, #FD1D1D, #F56040); }
+        .social-btn.telegram { background: #0088cc; }
+
+        /* ===== JSON TOGGLE ===== */
+        .json-toggle {
+            margin-top: 14px;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            color: #888;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Noto Sans Devanagari', 'Segoe UI', Arial, sans-serif;
+        }
+        .json-toggle:hover {
+            background: #f8f9fa;
+            border-color: #FF9933;
+            color: #FF9933;
+        }
+        .json-toggle i { font-size: 14px; }
+        .json-box {
+            margin-top: 12px;
+            background: #0a0a0a;
+            border-radius: 10px;
+            padding: 14px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: #00ff66;
+            display: none;
+            max-height: 200px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            line-height: 1.8;
+            border: 1px solid rgba(0,255,102,0.05);
+        }
+        .json-box.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+        .json-box::-webkit-scrollbar { width: 4px; }
+        .json-box::-webkit-scrollbar-thumb { background: rgba(0,255,102,0.15); border-radius: 4px; }
+
+        /* ===== FOOTER ===== */
+        .footer-section {
+            width: 100%;
+            background: #0a0a2a;
+            border-top: 3px solid #FF9933;
+            padding: 25px 0;
+            margin-top: 20px;
+        }
+        .footer-section .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .footer-section .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        .footer-section .footer-links a {
+            color: rgba(255,255,255,0.25);
+            font-size: 11px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        .footer-section .footer-links a:hover { color: #FF9933; }
+        .footer-section .footer-links a i { margin-right: 6px; }
+        .footer-section .copyright {
+            color: rgba(255,255,255,0.08);
+            font-size: 10px;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+        .footer-section .copyright .brand-name { color: #FF9933; font-weight: 600; }
+        .footer-section .tricolor-footer {
+            width: 100%;
+            height: 4px;
+            display: flex;
+            margin-top: 18px;
+        }
+        .footer-section .tricolor-footer .saffron { width: 33.33%; background: #FF9933; }
+        .footer-section .tricolor-footer .white { width: 33.33%; background: #FFFFFF; }
+        .footer-section .tricolor-footer .green { width: 33.34%; background: #138808; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .main-header .title-section h1 { font-size: 18px; }
+            .main-header .title-section .sub-title { font-size: 9px; letter-spacing: 1.5px; }
+            .main-header .logo-img { width: 50px; height: 50px; }
+            .main-header .status-badge { padding: 5px 14px; }
+            .main-header .status-badge span { font-size: 9px; }
+            .top-header .gov-text { font-size: 10px; }
+            .top-header .helpline { font-size: 10px; padding: 3px 12px; }
+            .card-header .card-title { font-size: 22px; }
+            .card-body { padding: 20px; }
+            .card-header { padding: 20px; }
+            .card-header .logo-icon { width: 60px; height: 60px; }
+            .result-item { flex-wrap: wrap; padding: 12px 16px; }
+            .result-item .label { width: 100%; margin-bottom: 4px; }
+            .result-item .value { width: 100%; text-align: left; }
+            .security-badge { gap: 12px; padding: 12px; }
+            .security-badge .badge-item { font-size: 10px; }
+            .social-btn { padding: 8px 16px; font-size: 12px; }
+            .social-btn i { font-size: 15px; }
+            .disclaimer-box { padding: 30px 22px; }
+            .disclaimer-box h2 { font-size: 20px; }
+            .disclaimer-box .icon-big { font-size: 50px; }
+            .disclaimer-box .content { font-size: 13px; }
+            .footer-section .footer-links { gap: 15px; }
+            .footer-section .footer-links a { font-size: 10px; }
+        }
+        @media (max-width: 480px) {
+            .main-header .title-section h1 { font-size: 15px; }
+            .main-header .logo-img { width: 42px; height: 42px; }
+            .card-header .card-title { font-size: 18px; }
+            .main-container { padding: 15px 12px; }
+            .card-body { padding: 16px; }
+            .result-item .value { font-size: 13px; }
+            .social-buttons { gap: 10px; }
+            .social-btn { padding: 7px 14px; font-size: 11px; }
+            .top-header .container { flex-direction: column; text-align: center; }
+            .card-header .logo-icon { width: 50px; height: 50px; }
+        }
+
+        /* ===== ERROR ===== */
+        .error-text {
+            color: #dc3545;
+            font-size: 12px;
+            padding: 6px 0;
+            display: none;
+            font-weight: 500;
+        }
+        .error-text.show {
+            display: block;
+            animation: shake 0.4s ease;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f0f0f0; }
+        ::-webkit-scrollbar-thumb { background: #FF9933; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e68a00; }
+
+        /* ===== DISABLE COPY ===== */
+        img, svg, video {
+            -webkit-user-drag: none;
+            user-drag: none;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== DISCLAIMER POPUP ===== -->
+<div class="disclaimer-overlay" id="disclaimerOverlay">
+    <div class="disclaimer-box">
+        <span class="icon-big">🛡️</span>
+        <div class="brand-name">The Hckrr BaziGar</div>
+        <h2>DISCLAIMER</h2>
+        <div class="divider"></div>
+        <div class="content">
+            This tool is for <strong>educational and security awareness</strong> purposes only.<br>
+            All data is obtained from <strong>publicly available sources</strong>.<br><br>
+            <i class="fas fa-link" style="color:#FF9933;"></i> Use responsibly &amp; ethically.
+        </div>
+        <button class="btn-accept" onclick="acceptDisclaimer()">
+            <i class="fas fa-check-circle"></i> I UNDERSTAND
+        </button>
+    </div>
+</div>
+
+<!-- ===== TRICOLOR TOP BAR ===== -->
+<div class="tricolor-bar">
+    <div class="saffron"></div>
+    <div class="white"></div>
+    <div class="green"></div>
+</div>
+
+<!-- ===== TOP HEADER ===== -->
+<div class="top-header">
+    <div class="container">
+        <div class="gov-text">
+            <i class="fas fa-shield-halved"></i>
+            The Hckrr BaziGar <span>|</span> CYBER SECURITY DIVISION
+        </div>
+        <div class="helpline">
+            <i class="fas fa-phone"></i> <strong>Helpline: +91 7029538584</strong>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MAIN HEADER ===== -->
+<div class="main-header">
+    <div class="container">
+        <div class="logo-section">
+            <img src="https://i.postimg.cc/1VBJWPhR/IMG-20260724-232723-958.webp" alt="Anish Exploits Logo" class="logo-img" draggable="false">
+            <div class="title-section">
+                <h1>
+                    <span class="brand">The Hacker</span> Bazi Garr
+                </h1>
+                <div class="sub-title">🔴 OSINT · SECURITY RESEARCH · INTELLIGENCE</div>
+            </div>
+        </div>
+        <div class="status-badge">
+            <div class="dot"></div>
+            <span>SYSTEM ACTIVE</span>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MAIN CONTAINER ===== -->
+<div class="main-container">
+
+    <div class="card">
+
+        <!-- Card Header -->
+        <div class="card-header">
+            <div class="badge-gov">
+                <i class="fas fa-lock"></i> SECURE · ENCRYPTED
+            </div>
+            <img src="https://i.postimg.cc/1VBJWPhR/IMG-20260724-232723-958.webp" alt="Anish Exploits Logo" class="logo-icon" draggable="false">
+            <div class="card-title">
+                <span class="highlight">NUMBER</span> INFORMATION
+            </div>
+            <div class="card-subtitle">
+                <i class="fas fa-shield"></i>
+                Advanced Phone Number Intelligence System
+            </div>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+
+            <!-- Form -->
+            <form id="trackForm">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-phone"></i> Enter 10-Digit Mobile Number
+                    </label>
+                    <div class="input-group">
+                        <span class="country-code">+91</span>
+                        <input type="tel" id="phoneInput" placeholder="Enter phone number" maxlength="10" inputmode="numeric" value="">
+                    </div>
+                </div>
+
+                <div class="status-bar">
+                    <span class="dot" id="statusDot"></span>
+                    <span id="statusText">Ready to track</span>
+                </div>
+
+                <div class="error-text" id="errorText">❌ Error message</div>
+
+                <button type="submit" class="btn-search" id="trackBtn">
+                    <i class="fas fa-search"></i> GET INFORMATION
+                </button>
+            </form>
+
+            <!-- Result -->
+            <div class="result-box" id="resultBox">
+                <div class="result-header">
+                    <div class="title">
+                        <i class="fas fa-file-alt"></i> Citizen Information
+                    </div>
+                    <div class="count">
+                        <i class="fas fa-database"></i> <span id="recordCount">0</span> Record(s)
+                    </div>
+                </div>
+                <div id="resultContent"></div>
+            </div>
+
+            <!-- Security Badge -->
+            <div class="security-badge">
+                <div class="badge-item"><i class="fas fa-lock"></i> SSL Secure</div>
+                <div class="badge-item"><i class="fas fa-shield-halved"></i> The Hckrr BaziGar</div>
+                <div class="badge-item"><i class="fas fa-check-circle"></i> Verified</div>
+                <div class="badge-item"><i class="fas fa-clock"></i> 24x7 Service</div>
+            </div>
+
+            <!-- API Info -->
+            <div id="apiInfo" style="display:none; margin-top:14px; padding:12px; background:#f8f9fa; border-radius:10px; display:flex; justify-content:center; gap:25px; flex-wrap:wrap; font-size:11px; color:#666; border:1px solid #e8e8e8;"></div>
+
+            <!-- Social Media -->
+            <div class="social-section">
+                <div class="social-title"><i class="fas fa-share-alt"></i> The Hckrr BaziGar</div>
+                <div class="social-buttons">
+                    <a href="https://bazigar-protfollio.netlify.app/" target="_blank" class="social-btn youtube"><i class="fab fa-youtube"></i> YouTube</a>
+                    <a href="https://instagram.com/hckr__rajib" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://t.me/hckr_BaziGarr" target="_blank" class="social-btn telegram"><i class="fab fa-telegram-plane"></i> Telegram</a>
+                </div>
+            </div>
+
+            <!-- JSON Toggle -->
+            <button class="json-toggle" onclick="toggleJson()">
+                <i class="fas fa-code"></i> View Raw Data (JSON)
+            </button>
+
+            <div class="json-box" id="jsonBox"></div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer-section">
+    <div class="container">
+        <div class="footer-links">
+            <a href="#"><i class="fas fa-info-circle"></i> About The Hckrr BaziGar</a>
+            <a href="#"><i class="fas fa-shield-halved"></i> Privacy Policy</a>
+            <a href="#"><i class="fas fa-gavel"></i> Terms & Conditions</a>
+            <a href="https://t.me/hckr_BaziGarr" target="_blank"><i class="fas fa-headset"></i> Support</a>
+            <a href="tel:+916209856775"><i class="fas fa-phone"></i> Contact</a>
+        </div>
+        <div class="copyright">
+            © 2024 <span class="brand-name">The Hckrr BaziGarr</span> · All Rights Reserved
+        </div>
+        <div class="tricolor-footer">
+            <div class="saffron"></div>
+            <div class="white"></div>
+            <div class="green"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// ============================================
+// DISCLAIMER - ONLY ONCE
+// ============================================
+(function() {
+    if (sessionStorage.getItem('disclaimerShown') === 'true') {
+        document.getElementById('disclaimerOverlay').classList.add('hide-permanent');
+    }
+})();
+
+function acceptDisclaimer() {
+    sessionStorage.setItem('disclaimerShown', 'true');
+    document.getElementById('disclaimerOverlay').classList.add('hidden');
+    setTimeout(function() {
+        document.getElementById('disclaimerOverlay').classList.add('hide-permanent');
+    }, 800);
+}
+
+// ============================================
+// TOGGLE JSON
+// ============================================
+function toggleJson() {
+    const box = document.getElementById('jsonBox');
+    box.classList.toggle('show');
+    if (box.classList.contains('show')) {
+        box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
+// ============================================
+// CALL API - USING PROXY
+// ============================================
+async function callAPI(number) {
+    try {
+        // Use Flask proxy endpoint
+        const response = await fetch('/api/lookup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ number: number })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('📦 API Response:', data);
+        return data;
+        
+    } catch (error) {
+        console.error('❌ API Error:', error);
+        return { status: 'error', message: error.message };
+    }
+}
+
+// ============================================
+// DISPLAY RESULTS
+// ============================================
+function displayResults(number, data) {
+    const resultBox = document.getElementById('resultBox');
+    const resultContent = document.getElementById('resultContent');
+    const recordCount = document.getElementById('recordCount');
+    const apiInfo = document.getElementById('apiInfo');
+    const jsonBox = document.getElementById('jsonBox');
+    
+    jsonBox.textContent = JSON.stringify(data, null, 2);
+    
+    if (data.status === 'error') {
+        resultBox.classList.remove('show');
+        document.getElementById('errorText').textContent = '❌ ' + (data.message || 'API Error');
+        document.getElementById('errorText').classList.add('show');
+        return;
+    }
+    
+    if (data.result && data.result.length > 0) {
+        const results = data.result;
+        const totalRecords = results.length;
+        
+        recordCount.textContent = totalRecords;
+        
+        let html = '';
+        const info = results[0];
+        
+        html += `<div class="result-item">
+            <span class="label"><i class="fas fa-phone"></i> Phone</span>
+            <span class="value highlight">${info.num || '+91 ' + number}</span>
+        </div>`;
+        
+        html += `<div class="result-item">
+            <span class="label"><i class="fas fa-user"></i> Full Name</span>
+            <span class="value highlight">${info.name || 'N/A'}</span>
+        </div>`;
+        
+        html += `<div class="result-item">
+            <span class="label"><i class="fas fa-user-tie"></i> Father's Name</span>
+            <span class="value">${info.fname || 'N/A'}</span>
+        </div>`;
+        
+        html += `<div class="result-item">
+            <span class="label"><i class="fas fa-id-card"></i> Aadhaar Number</span>
+            <span class="value green">${info.aadhar || 'N/A'}</span>
+        </div>`;
+        
+        html += `<div class="result-item">
+            <span class="label"><i class="fas fa-map-pin"></i> Address</span>
+            <span class="value address">${info.address || 'N/A'}</span>
+        </div>`;
+        
+        html += `<div class="result-item">
+            <span class="label"><i class="fas fa-signal"></i> Network 
+            
